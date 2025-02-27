@@ -16,7 +16,7 @@ const initialMovies = [
   { title: 'Interstellar', genre: 'Fantascienza' },
   { title: 'Pulp Fiction', genre: 'Thriller' },
 ]
-import { useState, useEffecct } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   //costante per la lista dei film filtrati
@@ -24,10 +24,32 @@ function App() {
   //costante per genere da selezionare nella select
   const [genre, setGenre] = useState('');
 
+  //useEffect che si attiva al cambio del genere selezionato
+  useEffect(() => {
+    if(genre === '') {
+      setMovies(initialMovies);
+    } else {
+      const filteredMovies = initialMovies.filter((movie) => movie.genre === genre);
+      setMovies(filteredMovies);
+    }
+  }   , [genre]);
+
   return (
     <>
     <div className="Container">
       <h1>Lista dei film</h1>
+      
+      {/*select per selezionare il genere*/}
+      <div className="select-container">
+        <select className="form-control" name="" id="" value={genre} onChange={(e) => setGenre(e.target.value)}>
+          <option value="">Tutti</option>
+          <option value="Fantascienza">Fantascienza</option>
+          <option value="Thriller">Thriller</option>
+          <option value="Romantico">Romantico</option>
+          <option value="Azione">Azione</option>
+        </select>
+      </div>
+      
       {/*lista dei film*/}
       <ul>
         {movies.map((movie, index) => (
