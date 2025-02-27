@@ -23,6 +23,9 @@ function App() {
   const [movies, setMovies] = useState(initialMovies);
   //costante per genere da selezionare nella select
   const [genre, setGenre] = useState('');
+  //filtro di ricerca per titolo del film
+  const [search, setSearch] = useState('')
+  const [filteredMovies, setFilteredMovies] = useState( initialMovies); 
 
   //useEffect che si attiva al cambio del genere selezionato
   useEffect(() => {
@@ -33,6 +36,17 @@ function App() {
       setMovies(filteredMovies);
     }
   }   , [genre]);
+
+  //useEffect per filtrare i film in base al titolo
+    /*useEffect(() => {
+      if(search === '') {
+        setFilteredMovies(initialMovies);
+    } else {
+      const filteredMovies = initialMovies.filter((movie) => movie.title.toLowerCase().includes(search.toLowerCase()));
+      setFilteredMovies(filteredMovies);
+    }
+  }   , [search]);*/
+
 
   return (
     <>
@@ -49,6 +63,12 @@ function App() {
           <option value="Azione">Azione</option>
         </select>
       </div>
+
+      {/*input per la ricerca del titolo del film
+      <div className="search-container">
+        <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Cerca per titolo"/>
+
+      </div>*/}
       
       {/*lista dei film*/}
       <ul>
@@ -56,6 +76,13 @@ function App() {
           <li key={index}>{movie.title} - {movie.genre}</li>
         ))}
       </ul>
+
+      {/*lista dei film filtrati per titolo
+      <ul>
+        {filteredMovies.map((filteredMovie, index) => (
+          <li key={index}>{filteredMovie.title} - {filteredMovie.genre}</li>
+        ))}
+      </ul>*/}
     </div>
      
     </>
